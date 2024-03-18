@@ -3,7 +3,7 @@ import mediapipe as mp
 import numpy as np 
 from data_collection.detection import mediapipe_detection, draw_styled_landmarks
 from data_collection.extract_feature import extract_coordinates
-from model.model import create_model
+from tensorflow.keras.models import load_model
 from settings import COLORS
 
 mp_holistic = mp.solutions.holistic
@@ -21,9 +21,8 @@ def prob_viz(res, actions, input_frame, COLORS):
         
     return output_frame
 
-def inference(actions, input_shape, num_classes):
-    model = create_model(input_shape, num_classes)
-    model = model.load_weights('path/model.h5')
+def inference(actions):
+    model = load_model('model/model.h5')
     
     sequence = []
     sentence = []
@@ -31,11 +30,9 @@ def inference(actions, input_shape, num_classes):
     threshold = 0.5
 
     cap = cv2.VideoCapture(0)
-    # Set mediapipe model 
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         while cap.isOpened():
 
-            # Read feed
             ret, frame = cap.read()
 
             # Make detections
@@ -45,7 +42,7 @@ def inference(actions, input_shape, num_classes):
             # Draw landmarks
             draw_styled_landmarks(image, results)
             
-            # 2. Prediction logic
+            # Prediction logic
             keypoints = extract_coordinates(results)
             sequence.append(keypoints)
             sequence = sequence[-30:]
@@ -85,6 +82,4 @@ def inference(actions, input_shape, num_classes):
 
 if __name__ == '__main__':
     actions = np.array(['hello', 'thanks', 'iloveyou'])
-    num_classes = actions.shape[0]
-    input_shape = (30, 1662)
-    inference(actions, input_shape, num_classes)
+    inference(actions)
