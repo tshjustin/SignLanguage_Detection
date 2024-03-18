@@ -6,6 +6,7 @@ from tensorflow.keras.callbacks import TensorBoard
 # +------------+
 DATA_PATH = os.path.join('MP_Data')
 EPCOHS = 2000
+COLORS = [(245,117,16), (117,245,16), (16,117,245)]
 
 # +------------+
 # | Logging    |
