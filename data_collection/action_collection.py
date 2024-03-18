@@ -1,10 +1,10 @@
 import os 
-import numpy as np 
 import cv2
+import numpy as np 
 import mediapipe as mp
+from settings import DATA_PATH
 from detection import mediapipe_detection, draw_styled_landmarks
 from extract_feature import extract_coordinates
-from settings import DATA_PATH
 
 actions = np.array(['hello', 'thanks', 'iloveyou']) # actions to detect 
 

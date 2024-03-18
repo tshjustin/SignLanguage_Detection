@@ -4,7 +4,8 @@ from tensorflow.keras.callbacks import TensorBoard
 # +------------+
 # | Constants  |
 # +------------+
-DATA_PATH = os.path.join('MP_Data') 
+DATA_PATH = os.path.join('MP_Data')
+EPCOHS = 2000
 
 # +------------+
 # | Logging    |

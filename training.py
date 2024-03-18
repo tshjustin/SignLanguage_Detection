@@ -1,7 +1,7 @@
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
-from model import create_model
-from settings import DATA_PATH, tb_callback
+from settings import DATA_PATH, EPCOHS, tb_callback
+from model.model import create_model 
 import numpy as np 
 import os 
 
@@ -33,7 +33,7 @@ def label_data(no_sequences, sequence_length, label_map):
 
 def train(sequences, labels):
     '''
-    Preprocess the data for training 
+    trains a LSTM model 
     ''' 
     x = np.array(sequences)
     print(x.shape) # check 
@@ -44,4 +44,14 @@ def train(sequences, labels):
     num_classes = actions.shape[0]
     input_shape = (30, 1662)
     model = create_model(input_shape, num_classes)
-    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    model.fit(x_train, y_train, epochs=EPCOHS, callbacks=[tb_callback]) # trains 
+    model.save('path/to/save/model')    
+    return model  
+
+if __name__ == '__main__':
+    label_map = create_labels(actions)
+    sequences, labels = label_data(30, 30, label_map)
+    model = train(sequences, labels)
+    
+    
