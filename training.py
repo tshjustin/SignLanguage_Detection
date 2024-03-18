@@ -54,4 +54,3 @@ if __name__ == '__main__':
     sequences, labels = label_data(30, 30, label_map)
     model = train(sequences, labels)
     
-    
