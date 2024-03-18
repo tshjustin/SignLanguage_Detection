@@ -12,7 +12,6 @@ mp_drawing = mp.solutions.drawing_utils
 def prob_viz(res, actions, input_frame, COLORS):
     '''
     Rendering probability of each action occuring for model evaluation
-    
     '''
     output_frame = input_frame.copy()
     for num, prob in enumerate(res):
@@ -42,19 +41,20 @@ def inference(actions):
             # Draw landmarks
             draw_styled_landmarks(image, results)
             
-            # Prediction logic
+            # extract sequences from current recorded actions 
             keypoints = extract_coordinates(results)
             sequence.append(keypoints)
-            sequence = sequence[-30:]
+            sequence = sequence[-30:]   
             
             if len(sequence) == 30:
-                res = model.predict(np.expand_dims(sequence, axis=0))[0]
-                print(actions[np.argmax(res)])
-                predictions.append(np.argmax(res))
+                res = model.predict(np.expand_dims(sequence, axis=0))[0] # predict action 
+                print(actions[np.argmax(res)]) # obtain the action that is has the highest probability 
+                predictions.append(np.argmax(res)) # obtain index of action 
                 
-                if np.unique(predictions[-10:])[0]==np.argmax(res): 
-                    if res[np.argmax(res)] > threshold: 
+                if np.unique(predictions[-10:])[0]==np.argmax(res): # check that the last 10 predictions on the frame are the same 
+                    if res[np.argmax(res)] > threshold: # if prediction above confidence 
                         
+                        # appends the current action to the sentence for tracking purposes 
                         if len(sentence) > 0: 
                             if actions[np.argmax(res)] != sentence[-1]:
                                 sentence.append(actions[np.argmax(res)])
@@ -64,19 +64,18 @@ def inference(actions):
                 if len(sentence) > 5: 
                     sentence = sentence[-5:]
 
-                # Viz probabilities
+                # add probability distribution 
                 image = prob_viz(res, actions, image, COLORS)
                 
             cv2.rectangle(image, (0,0), (640, 40), (245, 117, 16), -1)
             cv2.putText(image, ' '.join(sentence), (3,30), 
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
             
-            # Show to screen
             cv2.imshow('OpenCV Feed', image)
 
-            # Break gracefully
             if cv2.waitKey(10) & 0xFF == ord('q'):
                 break
+    
         cap.release()
         cv2.destroyAllWindows()
 
