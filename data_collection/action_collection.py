@@ -4,8 +4,8 @@ import cv2
 import mediapipe as mp
 from detection import mediapipe_detection, draw_styled_landmarks
 from extract_feature import extract_coordinates
+from settings import DATA_PATH
 
-DATA_PATH = os.path.join('MP_Data') 
 actions = np.array(['hello', 'thanks', 'iloveyou']) # actions to detect 
 
 no_sequences = 30 # number of frames each sequence is represented with 
