@@ -27,3 +27,6 @@ This project entails the reading of sign language given an action by a user. The
 
 ### Mediapipe 
 Mediapipe provides trained ML models for building pipelines to perform computer vision inference over arbitrary sensory data such as video or audio. In this case, it was used to detect facial and body features and outputted in the form of landmarks that are easily manipulated.
+
+### Further Notes
+In the future, I hope to extend this pipeline to be finedtuned to a specific sign language. Given multiple sign languages in the world such as the American Sign Language, Spanish Sign Language etc, finetuning is required to encompass different gestures.
