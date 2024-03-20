@@ -28,3 +28,6 @@ Mediapipe provides trained ML models for building pipelines to perform computer 
 
 ### Further Notes
 In the future, I hope to extend this pipeline to be finedtuned to a specific sign language. Given multiple sign languages in the world such as the American Sign Language, Spanish Sign Language etc, finetuning is required to encompass different gestures.
+
+### Limitation 
+Each action is currently mapped to a label, and each frame is independent of the other. In the real world where facial features, transitions between actions are also essential in building the context of the sentence, higher level of details are required to be captured. More complex architects are needed to capture such spatial data such as Transformers which can capture the spatial data and build up the correct context of a sentence. 
