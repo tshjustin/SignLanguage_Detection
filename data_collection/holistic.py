@@ -1,6 +1,6 @@
 import cv2
 import mediapipe as mp
-from detection import mediapipe_detection, draw_landmarks, draw_styled_landmarks
+from detection import mediapipe_detection, draw_styled_landmarks
 
 mp_holistic = mp.solutions.holistic # detection 
 mp_drawing = mp.solutions.drawing_utils # drawing model 

@@ -5,12 +5,9 @@ import mediapipe as mp
 from settings import DATA_PATH
 from detection import mediapipe_detection, draw_styled_landmarks
 from extract_feature import extract_coordinates
+from settings import FRAMES, SEQUENCE
 
 actions = np.array(['hello', 'thanks', 'iloveyou']) # actions to detect 
-
-no_sequences = 30 # number of frames each sequence is represented with 
-
-sequence_length = 30 # Videos are going to be 30 frames in length
 
 mp_holistic = mp.solutions.holistic # detection 
 mp_drawing = mp.solutions.drawing_utils # drawing model 
@@ -19,19 +16,19 @@ cap = cv2.VideoCapture(0) # opens webcam & reads feed
 
 def create_folder():
     for action in actions: 
-        for sequence in range(no_sequences):
+        for sequence in range(SEQUENCE):
             try: 
                 os.makedirs(os.path.join(DATA_PATH, action, str(sequence)))
             except:
                 pass
 
-def collection(actions, sequence_length, no_sequences):
+def collection(actions):
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic: # set mediapipe model  - set initial detection conf then subsequent tracking conf 
         for action in actions:
         # Loop through videos
-            for sequence in range(no_sequences):
+            for sequence in range(SEQUENCE):
                 # Loop through each frame of the video 
-                for frame_num in range(sequence_length):
+                for frame_num in range(FRAMES):
 
                     # Read feed
                     ret, frame = cap.read()
@@ -69,4 +66,4 @@ def collection(actions, sequence_length, no_sequences):
     cv2.destroyAllWindows()
                         
 if __name__ == '__main__':
-    collection(actions, sequence_length, no_sequences)
+    collection(actions, FRAMES, SEQUENCE)

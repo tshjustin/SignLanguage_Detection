@@ -9,7 +9,6 @@ def mediapipe_detection(image, model):
     Reads and detects models inside image 
     
     params: 
-    
     image: reads BGR -> RGB (Format required) 
     model: mediapipe model 
     '''
@@ -31,7 +30,7 @@ def draw_landmarks(image, results):
     
 def draw_styled_landmarks(image, results):
     '''
-    Draw styled landmarks  
+    Draw custom landmarks on detected objects 
     '''
     # Draw face connections
     mp_drawing.draw_landmarks(image, results.face_landmarks, mp_holistic.FACEMESH_TESSELATION, 
