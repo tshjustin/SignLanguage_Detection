@@ -33,7 +33,9 @@ def label_data(no_sequences, sequence_length, label_map):
 
 def train(sequences, labels):
     '''
-    trains a LSTM model 
+    Trains the LSTMS model with 2000 training rounds 
+    
+    Model is saved as a .h5 file 
     ''' 
     x = np.array(sequences)
     print(x.shape) # check 

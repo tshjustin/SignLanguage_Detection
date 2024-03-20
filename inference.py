@@ -21,6 +21,9 @@ def prob_viz(res, actions, input_frame, COLORS):
     return output_frame
 
 def inference(actions):
+    '''
+    Performs inference on objects in real time 
+    '''
     model = load_model('model/model.h5')
     
     sequence = []
