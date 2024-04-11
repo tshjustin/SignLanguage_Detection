@@ -3,6 +3,10 @@
 ### Overview 
 This project entails the reading of sign language given an action by a user. The action is mapped to a dictionary that contain the meaning (word) of the action. The model is used is a LSTM Neural Network due to the sequential nature of the data. Each action contains a pre-defined number of frames of 30, which contains landmarks that are detected and stored MediaPipe as Numpy arrays. 
 
+### Why LSTM 
+Since we are dealing with a sequential form of data, in the form of frames in sequence. A simple RNN was used but yielded poor results during inference as weights are not updated optimally due to long sequences. Thus encountering the vanishing gradient problem and the model performs poorly.
+
+
 ### Process 
 1. Data Preparation: Using Mediapipe and OpenCV, individual actions are recorded and stored as frames. For sufficient training data, each action consist of 30 videos (Sequences). Each sequence are split into 30 frames, with each frame being represented as a numpy array with **all** landmarks (Face, limbs, fingers, etc). After capturing the actions, the arrays are then labelled with their corresponding action names for prediction after training.
 
